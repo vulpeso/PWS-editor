@@ -1,3 +1,7 @@
+# Demo of GrapesJS - Strapi Storage
+
+Demo application with GrapesJS simple wrapper in React and communication with Strapi API.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
