@@ -39,15 +39,6 @@ class GrapesJsEditor extends React.Component {
         'grapesjs-strapi-storage': {}
       }
     });
-    this.editor.on('storage:load', function(e) {
-      console.log('STORAGE:LOAD ', e);
-    });
-    this.editor.on('storage:store', function(e) {
-      console.log('STORAGE:STORE ', e);
-    });
-    this.editor.on('storage:error', function(e) {
-      console.log('STORAGE:ERROR ', e);
-    });
   }
 
   componentWillUnmount() {

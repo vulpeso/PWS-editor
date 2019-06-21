@@ -1,0 +1,22 @@
+.gjs-pn-strapi-storage {
+  left: 15%;
+  top: 0;
+}
+
+.gjs-pn-strapi-storage .not-clickable {
+  pointer-events: none;
+  opacity: 0.5;
+  display: none;
+}
+
+.gjs-pn-strapi-storage .strapi-storage-label {
+  font-size: 90%;
+}
+
+.gjs-pn-strapi-storage:not(.syncing):not(.dirty):not(.error) .sync-ready,
+.gjs-pn-strapi-storage.syncing .sync-inprogress,
+.gjs-pn-strapi-storage.dirty .sync-dirty,
+.gjs-pn-strapi-storage.error .sync-error
+{
+  display: inline-block;
+}

@@ -1,29 +1,8 @@
 import grapesjs from 'grapesjs';
 import axios from 'axios';
 import {isEmpty, omitBy, clone} from 'lodash';
+import panels from './panels';
 
-// Just an example from 'https://github.com/artf/grapesjs-indexeddb'
-
-// GET
-// const alias = 'test';
-// const result = await axios(`http://localhost:1337/pages?alias=${alias}`);
-// const page = !!result.data && !!result.data.length && result.data[0];
-// const content = page['html'];
-
-// PUT http://localhost:1337/pages/${id}
-/*
-{
-  "_id": "5d0a8d100adf5743ac177f27",
-  "options": {},
-  "name": "Demo",
-  "alias": "test",
-  "html": "<h1>This is a changed test</h1>",
-  "createdAt": "2019-06-19T19:29:20.600Z",
-  "updatedAt": "2019-06-19T19:45:55.057Z",
-  "__v": 0,
-  "id": "5d0a8d100adf5743ac177f27"
-}
-*/
 
 export default grapesjs.plugins.add('grapesjs-strapi-storage', (editor, opts = {}) => {
   const options = { ...{
@@ -59,4 +38,7 @@ export default grapesjs.plugins.add('grapesjs-strapi-storage', (editor, opts = {
       axios.put(`${options.host}${options.path}/${toSave.id}`, toSave).then(clb);
     },
   });
+
+  // Load panels
+  panels(editor);
 });

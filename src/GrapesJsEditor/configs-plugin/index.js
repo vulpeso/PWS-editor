@@ -11,7 +11,7 @@ import commands from './commands';
 import blocks from './blocks';
 import components from './components';
 import panels from './panels';
-import styles from './styles';
+// import styles from './styles';
 
 export default grapesjs.plugins.add('gjs-preset-webpage', (editor, opts = {}) => {
   let config = opts;
@@ -130,6 +130,6 @@ export default grapesjs.plugins.add('gjs-preset-webpage', (editor, opts = {}) =>
   panels(editor, config);
 
   // Load styles
-  styles(editor, config);
+  // styles(editor, config);
 
 });
