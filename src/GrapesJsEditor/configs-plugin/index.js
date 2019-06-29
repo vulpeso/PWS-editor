@@ -11,6 +11,7 @@ import commands from './commands';
 import blocks from './blocks';
 import components from './components';
 import panels from './panels';
+import './style/main.scss';
 // import styles from './styles';
 
 export default grapesjs.plugins.add('gjs-preset-webpage', (editor, opts = {}) => {

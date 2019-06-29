@@ -1,0 +1,30 @@
+.gjs-pn-strapi-storage .not-clickable {
+  pointer-events: none;
+  opacity: 0.5;
+  display: none;
+  &.visible {
+    display: inline-block;
+  }
+}
+
+.gjs-pn-strapi-storage {
+  .strapi-storage-label, .strapi-storage-date {
+    font-size: 90%;
+    display: inline-block;
+  }
+  .strapi-storage-label {
+    font-size: 140%;
+  }
+}
+
+.gjs-pn-strapi-storage .sync-dirty {
+  display: none;
+}
+
+.gjs-pn-strapi-storage:not(.syncing):not(.dirty):not(.error) .sync-ready,
+.gjs-pn-strapi-storage.syncing .sync-inprogress,
+.gjs-pn-strapi-storage.dirty .sync-dirty,
+.gjs-pn-strapi-storage.error .sync-error
+{
+  display: inline-block;
+}

@@ -12,14 +12,13 @@ class GrapesJsEditor extends React.Component {
 
       height: '100vh',
       showOffsets: 1,
-      noticeOnUnload: 0,
+      noticeOnUnload: 1,
       
       storageManager: { 
         type: 'strapi-storage',
         id: '',
-        autoload: 1,
-        autosave: 1,
-        stepsBeforeSave: 1, 
+        autoload: 0,
+        autosave: 0,
       },
 
       commands: {
@@ -29,14 +28,25 @@ class GrapesJsEditor extends React.Component {
             run(editor) {
               editor.store();
             },
-          }
+          },
+          {
+            id: 'reload-data',
+            run(editor) {
+              editor.load();
+            },
+          },
         ]
       },
 
       plugins: ['gjs-preset-webpage', 'grapesjs-strapi-storage'],
       pluginsOpts: {
         'gjs-preset-webpage': {},
-        'grapesjs-strapi-storage': {}
+        'grapesjs-strapi-storage': {
+          host: 'http://localhost:1337',
+          path: '/pages',
+          filter: '?alias=',
+          alias: 'test'
+        }
       }
     });
   }
@@ -49,7 +59,8 @@ class GrapesJsEditor extends React.Component {
     return (
       <div id="gjs">
         <div>
-          <h1>Placeholder</h1>
+          <h1>Welcome!</h1>
+          <p>Use buttons in upper left corner to start editing or creating.</p>
         </div>
       </div>
     );
