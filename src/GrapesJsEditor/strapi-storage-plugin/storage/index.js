@@ -19,8 +19,8 @@ export default (editor, options = {}) => {
     load(keys, clb, clbErr) {
       axios(`${options.host}${options.path}${options.filter}${options.alias}`).then(response => {
         const {_id, ...data} = !!response.data && !!response.data.length && response.data[0];
-        lastLoaded = data;
-        const result = clone(omitBy(lastLoaded, isEmpty));
+        this.lastLoaded = data;
+        const result = clone(omitBy(this.lastLoaded, isEmpty));
         document.querySelector('.strapi-storage-label').innerHTML = result.name;
         document.querySelector('.strapi-storage-date').innerHTML = `loaded at: ${new Date().toLocaleTimeString()}`;
         clb(result);
@@ -29,7 +29,7 @@ export default (editor, options = {}) => {
 
     store(data, clb, clbErr) {
       const toSave = {
-        ...lastLoaded,
+        ...this.lastLoaded,
         ...data,
       };
       document.querySelector('.strapi-storage-date').innerHTML = `modified at: ${new Date().toLocaleTimeString()}`;

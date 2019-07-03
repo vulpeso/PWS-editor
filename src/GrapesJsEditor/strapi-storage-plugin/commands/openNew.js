@@ -1,46 +1,73 @@
 import axios from 'axios';
+import {cmdStrapiChangePage} from '../consts';
 
 export default (editor, options) => {
   const pfx = editor.getConfig('stylePrefix');
   const modal = editor.Modal;
 
-  const itemElements = document.createElement('div');
+  const createButton = (label, fun) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.innerHTML = label;
+    btn.className = `${pfx}btn-prim ${pfx}btn-open`;
+    btn.onclick = fun;
+    return btn;
+  }
 
-  // Init import button
-  const btnImp = document.createElement('button');
-  btnImp.type = 'button';
-  btnImp.innerHTML = 'Open';
-  btnImp.className = `${pfx}btn-prim ${pfx}btn-open`;
-  btnImp.onclick = e => {
-    // do action
-    modal.close();
+  const createInput = (id, label) => {
+    const container = document.createElement('div');
+    const labelElement = document.createElement('label');
+    const labelText = document.createTextNode(label)
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = id;
+    labelElement.appendChild(labelText);
+    labelElement.appendChild(input);
+    container.appendChild(labelElement);
+    return [container, input];
+  }
+
+  const newPageTemplate = {
+    "name": "put-name-here",
+    "alias": "put-alias-here",
+    "html": "<h1>This is a new page</h1>",
+    "options": {}
   };
 
-  const loadItems = (_this) => {
-    axios(`${options.host}${options.path}`).then(response => {
-      const data = !!response.data && !!response.data.length && response.data;
-      console.log(data);
-      refreshView(_this, data);
+  const createItem = (toCreate) => {
+    axios.post(`${options.host}${options.path}`, toCreate).then(response => {
+      editor.runCommand(cmdStrapiChangePage, { alias: toCreate.alias});
+      modal.close();
     });
   }
 
-  const refreshView = (_this, data) => {
+  const createView = () => {
     const container = document.createElement('div');
+    const [nameContainer, nameInput] = createInput('create-page--name', 'name');
+    const [aliasContainer, aliasInput] = createInput('create-page--alias', 'alias');
+    
+    const saveButton = createButton('Create', event => {
+      const newPage = {
+        ...newPageTemplate,
+        "name": nameInput.value,
+        "alias": aliasInput.value
+      };
+      createItem(newPage);
+      saveButton.disabled = true;
+    });
 
-    const text = data.map(item => `<h5>${item.name}</h5>`).join('');
-    console.log(text);
-    itemElements.innerHTML = text;
-    container.appendChild(itemElements);
-    container.appendChild(btnImp);
+    container.appendChild(nameContainer);
+    container.appendChild(aliasContainer);
+    container.appendChild(saveButton);
 
     modal.setTitle('New page');
     modal.setContent(container);
-    modal.open().getModel().once('change:open', () => editor.stopCommand(_this.id));
   }
 
   return {
     run(editor) {
-      loadItems(this);
+      createView(this);
+      modal.open().getModel().once('change:open', () => editor.stopCommand(this.id));
     },
 
     stop() {

@@ -1,46 +1,89 @@
 import axios from 'axios';
+import {cmdStrapiChangePage} from '../consts';
 
 export default (editor, options) => {
   const pfx = editor.getConfig('stylePrefix');
   const modal = editor.Modal;
+  
+  const createButton = (label, fun) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.innerHTML = label;
+    btn.className = `${pfx}btn-prim ${pfx}btn-open`;
+    btn.onclick = fun;
+    return btn;
+  }
 
-  const itemElements = document.createElement('div');
+  const createInput = (id, label) => {
+    const container = document.createElement('div');
+    const labelElement = document.createElement('label');
+    const labelText = document.createTextNode(label)
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = id;
+    labelElement.appendChild(labelText);
+    labelElement.appendChild(input);
+    container.appendChild(labelElement);
+    return [container, input];
+  }
 
-  // Init import button
-  const btnImp = document.createElement('button');
-  btnImp.type = 'button';
-  btnImp.innerHTML = 'Open';
-  btnImp.className = `${pfx}btn-prim ${pfx}btn-open`;
-  btnImp.onclick = e => {
-    // do action
-    modal.close();
-  };
-
-  const loadItems = (_this) => {
-    axios(`${options.host}${options.path}`).then(response => {
-      const data = !!response.data && !!response.data.length && response.data;
-      console.log(data);
-      refreshView(_this, data);
+  const updateItem = (toUpdate) => {
+    axios.put(`${options.host}${options.path}/${toUpdate.id}`, toUpdate).then(response => {
+      editor.runCommand(cmdStrapiChangePage, { alias: toUpdate.alias});
+      modal.close();
     });
   }
 
-  const refreshView = (_this, data) => {
+  const createView = () => {
+    const storage = editor.StorageManager.get('strapi-storage');
+    const lastLoadedPage = storage.lastLoaded;
+    console.log(storage);
+    if (!!lastLoadedPage) {
+      createFormView(lastLoadedPage);
+    } else {
+      emptyStateView(this);
+    }
+  }
+
+  const createFormView = (lastLoadedPage) => {
     const container = document.createElement('div');
+    const [nameContainer, nameInput] = createInput('create-page--name', 'name');
+    const [aliasContainer, aliasInput] = createInput('create-page--alias', 'alias');
+    nameInput.value = lastLoadedPage.name;
+    aliasInput.value = lastLoadedPage.alias;
 
-    const text = data.map(item => `<h5>${item.name}</h5>`).join('');
-    console.log(text);
-    itemElements.innerHTML = text;
-    container.appendChild(itemElements);
-    container.appendChild(btnImp);
+    const saveButton = createButton('Save', event => {
+      const newPage = {
+        ...lastLoadedPage,
+        "name": nameInput.value,
+        "alias": aliasInput.value
+      };
+      updateItem(newPage);
+      saveButton.disabled = true;
+    });
 
-    modal.setTitle('Edit page');
+    container.appendChild(nameContainer);
+    container.appendChild(aliasContainer);
+    container.appendChild(saveButton);
+
+    modal.setTitle('Edit page info');
     modal.setContent(container);
-    modal.open().getModel().once('change:open', () => editor.stopCommand(_this.id));
+  }
+
+  const emptyStateView = () => {
+    const container = document.createElement('div');
+    const message = document.createTextNode('No page loaded.');
+
+    container.appendChild(message);
+
+    modal.setTitle('Edit page info');
+    modal.setContent(container);
   }
 
   return {
     run(editor) {
-      loadItems(this);
+      createView();
+      modal.open().getModel().once('change:open', () => editor.stopCommand(this.id));
     },
 
     stop() {
