@@ -12,13 +12,11 @@ export default (editor, config) => {
   const crc = 'create-comp';
   const mvc = 'move-comp';
   const swv = 'sw-visibility';
-  const expt = 'export-template';
   const osm = 'open-sm';
   const otm = 'open-tm';
   const ola = 'open-layers';
   const obl = 'open-blocks';
   const ful = 'fullscreen';
-  const prv = 'preview';
 
   eConfig.showDevices = 0;
 
@@ -33,19 +31,10 @@ export default (editor, config) => {
       context: swv,
       className: 'fa fa-square-o',
     },{
-      id: prv,
-      context: prv,
-      command: e => e.runCommand(prv),
-      className: 'fa fa-eye',
-    },{
       id: ful,
       command: ful,
       context: ful,
       className: 'fa fa-arrows-alt',
-    },{
-      id: expt,
-      className: 'fa fa-code',
-      command: e => e.runCommand(expt),
     },{
       id: 'undo',
       className: 'fa fa-undo',
@@ -54,10 +43,6 @@ export default (editor, config) => {
       id: 'redo',
       className: 'fa fa-repeat',
       command: e => e.runCommand('core:redo'),
-    },{
-      id: cmdImport,
-      className: 'fa fa-download',
-      command: e => e.runCommand(cmdImport),
     },{
       id: cmdClear,
       className: 'fa fa-trash',

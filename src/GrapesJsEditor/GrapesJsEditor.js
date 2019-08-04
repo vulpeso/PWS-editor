@@ -1,8 +1,7 @@
 import React from 'react';
 import grapesjs from 'grapesjs';
 import './GrapesJsEditor.css'
-import './configs-plugin/index';
-import './strapi-storage-plugin/index';
+import './strapi-storage-plugin/plugin';
 
 class GrapesJsEditor extends React.Component {
   componentDidMount() {
@@ -38,9 +37,8 @@ class GrapesJsEditor extends React.Component {
         ]
       },
 
-      plugins: ['gjs-preset-webpage', 'grapesjs-strapi-storage'],
+      plugins: ['grapesjs-strapi-storage'],
       pluginsOpts: {
-        'gjs-preset-webpage': {},
         'grapesjs-strapi-storage': {
           host: 'http://localhost:1337',
           path: '/pages',
