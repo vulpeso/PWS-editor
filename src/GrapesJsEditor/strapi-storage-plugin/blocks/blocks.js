@@ -1,40 +1,75 @@
 export default (editor, config) => {
   const bm = editor.BlockManager;
-  const toAdd = name => config.blocks.indexOf(name) >= 0;
 
-  toAdd('link-block') && bm.add('link-block', {
+  // bm.add('link-block', {
+  //   category: 'Basic',
+  //   label: 'Link Block',
+  //   attributes: { class: 'fa fa-link' },
+  //   content: {
+  //     type:'link',
+  //     editable: false,
+  //     droppable: true,
+  //     style:{
+  //       display: 'inline-block',
+  //       padding: '5px',
+  //       'min-height': '50px',
+  //       'min-width': '50px'
+  //     }
+  //   },
+  // });
+
+  // bm.add('quote', {
+  //   label: 'Quote',
+  //   category: 'Basic',
+  //   attributes: { class: 'fa fa-quote-right' },
+  //   content: `<blockquote class="quote">
+  //       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit
+  //     </blockquote>`
+  // });
+
+  // bm.add('text-basic', {
+  //   category: 'Basic',
+  //   label: 'Text section',
+  //   attributes: { class: 'gjs-fonts gjs-f-h1p' },
+  //   content: `<section class="bdg-sect">
+  //     <h1 class="heading">Insert title here</h1>
+  //     <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+  //     </section>`
+  // });
+
+  bm.add('header-block', {
     category: 'Basic',
-    label: 'Link Block',
-    attributes: { class: 'fa fa-link' },
+    label: 'Header',
+    attributes: { class: 'fa fa-ellipsis-h' },
     content: {
-      type:'link',
-      editable: false,
-      droppable: true,
-      style:{
-        display: 'inline-block',
-        padding: '5px',
-        'min-height': '50px',
-        'min-width': '50px'
-      }
+      type:'header',
     },
   });
 
-  toAdd('quote') && bm.add('quote', {
-    label: 'Quote',
+  bm.add('hero-block', {
     category: 'Basic',
-    attributes: { class: 'fa fa-quote-right' },
-    content: `<blockquote class="quote">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit
-      </blockquote>`
+    label: 'Hero',
+    attributes: { class: 'fa fa-window-maximize' },
+    content: {
+      type:'hero',
+    },
   });
 
-  toAdd('text-basic') && bm.add('text-basic', {
-    category: 'Basic',
-    label: 'Text section',
-    attributes: { class: 'gjs-fonts gjs-f-h1p' },
-    content: `<section class="bdg-sect">
-      <h1 class="heading">Insert title here</h1>
-      <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-      </section>`
-  });
+  // bm.add('wrapper-block', {
+  //   category: 'Basic',
+  //   label: 'Content Wrapper',
+  //   attributes: { class: 'fa fa-calculator' },
+  //   content: {
+  //     type:'content-wrapper',
+  //   },
+  // });
+
+  // bm.add('html-block', {
+  //   category: 'Basic',
+  //   label: 'HTML',
+  //   attributes: { class: 'fa fa-calculator' },
+  //   content: {
+  //     type:'partial-html',
+  //   },
+  // });
 }

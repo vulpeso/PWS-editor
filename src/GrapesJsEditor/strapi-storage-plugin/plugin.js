@@ -18,9 +18,6 @@ export default grapesjs.plugins.add('grapesjs-strapi-storage', (editor, opts = {
 
   
   let defaults = {
-    // Which blocks to add
-    blocks: ['link-block', 'quote', 'text-basic'],
-
     // Confirm text before cleaning the canvas
     textCleanCanvas: 'Are you sure to clean the canvas?',
 
