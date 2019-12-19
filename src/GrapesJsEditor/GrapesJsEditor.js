@@ -42,6 +42,7 @@ class GrapesJsEditor extends React.Component {
         'grapesjs-strapi-storage': {
           host: 'http://localhost:1337',
           path: '/pages',
+          styles: '/styles',
           filter: '?alias=',
           alias: 'test'
         }

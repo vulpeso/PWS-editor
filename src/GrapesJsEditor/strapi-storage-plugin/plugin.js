@@ -67,7 +67,7 @@ export default grapesjs.plugins.add('grapesjs-strapi-storage', (editor, opts = {
   } = config;
 
   // Load plugins
-  // blocksBasicOpts && pluginBlocks(editor, blocksBasicOpts);
+  blocksBasicOpts && pluginBlocks(editor, blocksBasicOpts);
   aviaryOpts && pluginAviary(editor, aviaryOpts);
 
   // Load basic panels
